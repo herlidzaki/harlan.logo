@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HARLAN STORE - Digital Service Marketplace</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f6ff',
+                            100: '#e0edff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            glow: '#06b6d4',
+                            accent: '#8b5cf6',
+                            dark: '#0b0f19',
+                            card: '#111827',
+                            border: '#1f2937'
+                        }
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 20px rgba(6, 182, 212, 0.35)',
+                        'neon-purple': '0 0 20px rgba(139, 92, 246, 0.35)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #080c14;
+            color: #f3f4f6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-modal {
+            background: rgba(13, 19, 33, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080c14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo & Name -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div id="nav-logo-container" class="w-10 h-10 rounded-xl overflow-hidden bg-gradient-to-tr from-cyan-500 to-purple-600 p-[2px] flex items-center justify-center shadow-neon-cyan">
+                        <img id="nav-logo-img" src="" alt="HARLAN STORE Logo" class="w-full h-full object-cover rounded-[10px] hidden" onerror="this.classList.add('hidden'); document.getElementById('nav-logo-icon').classList.remove('hidden');">
+                        <i id="nav-logo-icon" class="fa-solid fa-bolt text-xl text-white"></i>
+                    </div>
+                    <div>
+                        <span id="nav-brand-name" class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 bg-clip-text text-transparent">HARLAN STORE</span>
+                        <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Digital Marketplace</span>
+                    </div>
+                </a>
+
+                <!-- Navigation Desktop -->
+                <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#services" class="text-slate-300 hover:text-cyan-400 transition-colors"><i class="fa-solid fa-list-check mr-1 text-cyan-500"></i> Layanan</a>
+                    <a href="#queue-tracker" class="text-slate-300 hover:text-cyan-400 transition-colors"><i class="fa-solid fa-magnifying-glass mr-1 text-cyan-500"></i> Cek Antrean</a>
+                    <a href="#how-it-works" class="text-slate-300 hover:text-cyan-400 transition-colors"><i class="fa-solid fa-circle-info mr-1 text-cyan-500"></i> Cara Pesan</a>
+                    <a id="nav-cs-btn" href="#" target="_blank" class="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5 font-bold bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-500/30">
+                        <i class="fa-brands fa-whatsapp text-emerald-400"></i> CS Admin
+                    </a>
+                </nav>
+
+                <!-- Header Actions -->
+                <div class="flex items-center gap-3">
+                    <button onclick="openAdminModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:border-cyan-500/50 transition-all duration-200 flex items-center gap-2">
+                        <i class="fa-solid fa-user-shield text-cyan-400"></i>
+                        <span>Admin</span>
+                    </button>
+                    <!-- Mobile Hamburger -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-4 space-y-2">
+            <a href="#services" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400"><i class="fa-solid fa-list-check mr-2 text-cyan-400"></i> Katalog Layanan</a>
+            <a href="#queue-tracker" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400"><i class="fa-solid fa-magnifying-glass mr-2 text-cyan-400"></i> Cek Antrean</a>
+            <a href="#how-it-works" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400"><i class="fa-solid fa-circle-info mr-2 text-cyan-400"></i> Cara Pemesanan</a>
+            <a id="mobile-cs-btn" href="#" target="_blank" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-emerald-400 bg-emerald-950/40 border border-emerald-800/60 hover:bg-emerald-900/50 font-bold"><i class="fa-brands fa-whatsapp mr-2 text-emerald-400"></i> Hubungi CS Admin</a>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden py-12 md:py-20 px-4 sm:px-6 lg:px-8">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute top-1/2 -right-24 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-5xl mx-auto text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-6 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span>Layanan Serba Cepat, Murah & Terpercaya</span>
+                </div>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight mb-6">
+                    Solusi Transaksi Digital <br>
+                    <span class="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">Joki, Posting & Desain Grafis</span>
+                </h1>
+                <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-8 font-normal leading-relaxed">
+                    Platform layanan instant untuk Joki Kontak, JasaPost, dan Desain PP JB premium. Transaksi mudah, aman, dan langsung diproses via WhatsApp Admin!
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#services" class="px-6 py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white shadow-neon-cyan transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Pesan Layanan Sekarang</span>
+                    </a>
+                    <a href="#queue-tracker" class="px-6 py-3.5 rounded-xl font-bold text-sm bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:border-cyan-500/50 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-ticket"></i>
+                        <span>Lacak Kode Antrean</span>
+                    </a>
+                </div>
+
+                <!-- Live Metrics -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto mt-12 pt-8 border-t border-slate-800/80">
+                    <div class="p-4 rounded-xl glass-panel text-center">
+                        <div class="text-2xl font-extrabold text-cyan-400" id="stat-services-count">0</div>
+                        <div class="text-xs text-slate-400 font-medium mt-1">Layanan Aktif</div>
+                    </div>
+                    <div class="p-4 rounded-xl glass-panel text-center">
+                        <div class="text-2xl font-extrabold text-purple-400" id="stat-orders-count">0</div>
+                        <div class="text-xs text-slate-400 font-medium mt-1">Total Pesanan</div>
+                    </div>
+                    <div class="p-4 rounded-xl glass-panel text-center col-span-2 md:col-span-1">
+                        <div class="text-2xl font-extrabold text-emerald-400">24/7</div>
+                        <div class="text-xs text-slate-400 font-medium mt-1">Sistem Otomatis WA</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Katalog Layanan Unggulan</h2>
+                <p class="text-slate-400 text-sm mt-2">Pilih paket layanan digital sesuai kebutuhan Anda dengan tarif paling terjangkau.</p>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10" id="category-tabs">
+                <!-- Tabs will be rendered dynamically by JS -->
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="services-grid">
+                <!-- Cards rendered dynamically -->
+            </div>
+        </section>
+
+        <!-- Queue Tracking Section -->
+        <section id="queue-tracker" class="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl">
+                <div class="text-center mb-8">
+                    <span class="inline-block p-3 rounded-2xl bg-cyan-500/10 text-cyan-400 text-xl mb-3">
+                        <i class="fa-solid fa-receipt"></i>
+                    </span>
+                    <h2 class="text-2xl font-bold text-white">Lacak Status Antrean</h2>
+                    <p class="text-slate-400 text-sm mt-1">Masukkan Kode Antrean Anda (Contoh: HRLN-XXXXXX) untuk memeriksa status pesanan secara langsung.</p>
+                </div>
+
+                <form onsubmit="handleSearchQueue(event)" class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="queue-search-input" placeholder="Masukkan Kode Antrean..." required class="flex-grow bg-slate-900 border border-slate-700 focus:border-cyan-500 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-cyan-500 uppercase tracking-wider font-semibold">
+                    <button type="submit" class="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm transition-all shadow-neon-cyan flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Cari Status</span>
+                    </button>
+                </form>
+
+                <!-- Queue Result Box -->
+                <div id="queue-result-container" class="mt-8 hidden">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- How it works & Payment Info -->
+        <section id="how-it-works" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Alur Pemesanan Mudah</h2>
+                <p class="text-slate-400 text-sm mt-2">Hanya butuh 4 langkah mudah untuk menyelesaikan transaksi layanan Anda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-panel p-6 rounded-2xl relative border border-slate-800/80">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-lg mb-4">1</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Pilih Layanan</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Pilih jenis layanan Joki, JasaPost, atau Desain yang Anda butuhkan di katalog.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl relative border border-slate-800/80">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-lg mb-4">2</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Pembayaran & Bukti</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Transfer via DANA, GoPay, atau QRIS lalu unggah foto bukti pembayaran.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl relative border border-slate-800/80">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg mb-4">3</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Dapat Kode Antrean</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Sistem akan meng-generate Kode Antrean unik secara otomatis untuk Anda.</p>
+                </div>
+                <div class="glass-panel p-6 rounded-2xl relative border border-slate-800/80">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg mb-4">4</div>
+                    <h3 class="text-lg font-bold text-white mb-2">Kirim via WhatsApp</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">Klik tombol dispatch untuk meneruskan detail pesanan ke Admin WhatsApp.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950 py-8 px-4 sm:px-6 lg:px-8 text-slate-400 text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="font-bold text-slate-200 text-sm" id="footer-brand-name">HARLAN STORE</span>
+                <span>&copy; <span id="current-year"></span> All rights reserved.</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#services" class="hover:text-cyan-400 transition-colors">Layanan</a>
+                <a href="#queue-tracker" class="hover:text-cyan-400 transition-colors">Lacak Pesanan</a>
+                <button onclick="openAdminModal()" class="hover:text-cyan-400 transition-colors">Admin Panel</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Checkout / Order Modal -->
+    <div id="order-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-modal w-full max-w-lg rounded-2xl border border-slate-800 p-6 shadow-2xl relative my-8">
+            <button onclick="closeOrderModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div class="mb-6">
+                <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">Formulir Pemesanan</span>
+                <h3 class="text-xl font-extrabold text-white" id="modal-service-title">Nama Layanan</h3>
+                <p class="text-cyan-400 font-bold text-lg mt-1" id="modal-service-price">Rp 0</p>
+            </div>
+
+            <form id="order-form" onsubmit="handleOrderSubmit(event)">
+                <input type="hidden" id="form-service-id">
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Lengkap / Username <span class="text-red-400">*</span></label>
+                        <input type="text" id="form-customer-name" required placeholder="Contoh: Budi Santoso" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-3 text-sm focus:border-cyan-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Nomor WhatsApp <span class="text-red-400">*</span></label>
+                        <input type="tel" id="form-customer-phone" required placeholder="Contoh: 081234567890" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-3 text-sm focus:border-cyan-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Catatan Tambahan (Opsional)</label>
+                        <textarea id="form-order-notes" rows="2" placeholder="Detail khusus permintaan Anda..." class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-3 text-sm focus:border-cyan-500 focus:outline-none"></textarea>
+                    </div>
+
+                    <!-- Payment Details Card -->
+                    <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-3">
+                        <label class="block text-xs font-bold text-slate-200 uppercase tracking-wider">Pilihan Pembayaran</label>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="payment_method" value="DANA" checked onchange="togglePaymentDisplay()" class="peer sr-only">
+                                <div class="p-3 rounded-lg border border-slate-700 bg-slate-800 text-center peer-checked:border-cyan-500 peer-checked:bg-cyan-500/10 transition-all">
+                                    <div class="font-bold text-xs text-white">DANA</div>
+                                    <div class="text-[10px] text-slate-400" id="display-dana-number">0812...</div>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="payment_method" value="GoPay" onchange="togglePaymentDisplay()" class="peer sr-only">
+                                <div class="p-3 rounded-lg border border-slate-700 bg-slate-800 text-center peer-checked:border-cyan-500 peer-checked:bg-cyan-500/10 transition-all">
+                                    <div class="font-bold text-xs text-white">GoPay</div>
+                                    <div class="text-[10px] text-slate-400" id="display-gopay-number">0812...</div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Active Payment Info Box -->
+                        <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-400">Transfer ke:</span>
+                                <button type="button" onclick="copyPaymentNumber()" class="text-cyan-400 hover:underline text-[11px] font-semibold"><i class="fa-solid fa-copy mr-1"></i>Salin Nomor</button>
+                            </div>
+                            <div class="font-mono text-sm font-bold text-white" id="active-payment-number">-</div>
+                            <div class="text-[11px] text-slate-400">Atas Nama: <span class="text-slate-200 font-semibold" id="display-account-holder">HARLAN STORE Official</span></div>
+                        </div>
+
+                        <!-- QRIS Section -->
+                        <div id="qris-display-box" class="text-center pt-2 border-t border-slate-800">
+                            <p class="text-xs text-slate-300 font-medium mb-2">Atau Scan QR Code Berikut:</p>
+                            <div class="bg-white p-2 rounded-xl inline-block shadow-lg">
+                                <img id="display-qris-image" src="" alt="QRIS Code" class="w-36 h-36 object-contain">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Proof Upload -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Unggah Bukti Transfer <span class="text-red-400">*</span></label>
+                        <input type="file" id="form-payment-proof" accept="image/*" required onchange="handleImageProofChange(event)" class="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-cyan-400 hover:file:bg-slate-700">
+                        <div id="proof-preview-container" class="mt-2 hidden">
+                            <img id="proof-preview-img" src="" alt="Bukti Transfer" class="h-28 rounded-lg object-cover border border-slate-700">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex gap-3">
+                    <button type="button" onclick="closeOrderModal()" class="w-1/3 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs">Batal</button>
+                    <button type="submit" class="w-2/3 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs shadow-neon-cyan flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Proses Pesanan</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Order Created Success Modal (Queue Display & WA Redirect) -->
+    <div id="order-success-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-modal w-full max-w-md rounded-2xl border border-cyan-500/30 p-6 shadow-2xl text-center relative">
+            <div class="w-14 h-14 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border border-emerald-500/30">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <h3 class="text-xl font-extrabold text-white">Pesanan Berhasil dibuat!</h3>
+            <p class="text-slate-400 text-xs mt-1">Simpan Kode Antrean Anda untuk memantau status pengerjaan.</p>
+
+            <!-- Queue Card Display -->
+            <div class="my-6 p-4 bg-slate-900 rounded-xl border border-dashed border-cyan-500/50">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Kode Antrean Anda</span>
+                <div id="created-queue-code" class="text-2xl font-black text-cyan-400 font-mono tracking-wider my-1">HRLN-000000</div>
+                <button onclick="copyCreatedQueueCode()" class="text-xs text-slate-400 hover:text-cyan-400"><i class="fa-solid fa-copy mr-1"></i>Salin Kode</button>
+            </div>
+
+            <p class="text-xs text-slate-300 leading-relaxed mb-6">
+                Klik tombol di bawah ini untuk meneruskan bukti pembayaran dan detail ke WhatsApp Admin agar pesanan segera diproses.
+            </p>
+
+            <div class="space-y-3">
+                <a id="btn-whatsapp-dispatch" href="#" target="_blank" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg transition-all">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Lanjut ke WhatsApp Admin</span>
+                </a>
+                <button onclick="closeSuccessModal()" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs">
+                    Tutup & Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="image-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageModal()">
+        <div class="relative max-w-2xl max-h-[90vh]" onclick="event.stopPropagation()">
+            <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white hover:text-cyan-400 text-xl font-bold">
+                <i class="fa-solid fa-xmark"></i> Tutup
+            </button>
+            <img id="preview-full-image" src="" alt="Full Preview" class="max-w-full max-h-[80vh] rounded-xl object-contain border border-slate-700 shadow-2xl">
+        </div>
+    </div>
+
+    <!-- Admin Authentication & Management Modal -->
+    <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        
+        <!-- Admin PIN Login Card -->
+        <div id="admin-login-card" class="glass-modal w-full max-w-sm rounded-2xl border border-slate-800 p-6 shadow-2xl relative text-center">
+            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="w-12 h-12 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl mx-auto mb-4 border border-cyan-500/30">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-white">Login Admin Panel</h3>
+            <p class="text-slate-400 text-xs mt-1 mb-6">Masukkan PIN Keamanan untuk mengelola toko.</p>
+
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="admin-pin-input" placeholder="Masukkan PIN (Default: 030313)" required maxlength="20" class="w-full bg-slate-900 border border-slate-700 text-center font-mono text-lg tracking-widest text-white rounded-xl p-3 focus:border-cyan-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm shadow-neon-cyan">
+                    Masuk Admin
+                </button>
+            </form>
+        </div>
+
+        <!-- Admin Dashboard Panel -->
+        <div id="admin-dashboard-card" class="glass-modal w-full max-w-5xl rounded-2xl border border-slate-800 p-6 shadow-2xl relative hidden my-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Admin Dashboard</h3>
+                        <p class="text-xs text-slate-400">Pengelolaan Layanan, Antrean & Pengaturan Toko</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="handleAdminLogout()" class="px-3.5 py-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-bold border border-red-500/30 hover:border-red-500/60 flex items-center gap-1.5 transition-all shadow-sm">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Keluar / Logout</span>
+                    </button>
+                    <button onclick="closeAdminModal()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Navigation Tabs -->
+            <div class="flex border-b border-slate-800 mt-4 overflow-x-auto gap-2">
+                <button onclick="switchAdminTab('orders')" id="admin-tab-orders" class="px-4 py-2.5 text-xs font-bold rounded-t-lg text-cyan-400 border-b-2 border-cyan-400 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check"></i> Kelola Antrean & Pesanan
+                </button>
+                <button onclick="switchAdminTab('services')" id="admin-tab-services" class="px-4 py-2.5 text-xs font-bold rounded-t-lg text-slate-400 hover:text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-boxes-stacked"></i> Kelola Katalog Layanan
+                </button>
+                <button onclick="switchAdminTab('settings')" id="admin-tab-settings" class="px-4 py-2.5 text-xs font-bold rounded-t-lg text-slate-400 hover:text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders"></i> Branding & Pengaturan
+                </button>
+            </div>
+
+            <!-- Admin Tab Content: Orders -->
+            <div id="admin-content-orders" class="pt-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <h4 class="text-sm font-bold text-slate-200">Daftar Antrean Masuk</h4>
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <select id="admin-order-filter" onchange="renderAdminOrders()" class="bg-slate-900 border border-slate-700 text-white text-xs rounded-lg px-3 py-2">
+                            <option value="ALL">Semua Status</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="PROCESSING">Diproses</option>
+                            <option value="COMPLETED">Selesai</option>
+                            <option value="CANCELLED">Dibatalkan</option>
+                        </select>
+                        <button onclick="clearAllOrders()" class="px-3 py-2 rounded-lg bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-semibold border border-red-800">
+                            Hapus Semua
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-800">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-900 text-slate-400 font-semibold uppercase text-[10px] tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="p-3">Kode Antrean</th>
+                                <th class="p-3">Pemesan</th>
+                                <th class="p-3">Layanan</th>
+                                <th class="p-3">Harga</th>
+                                <th class="p-3">Metode / Bukti</th>
+                                <th class="p-3">Status</th>
+                                <th class="p-3 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-orders-table-body" class="divide-y divide-slate-800/60 bg-slate-950/50">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Admin Tab Content: Services -->
+            <div id="admin-content-services" class="pt-6 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-sm font-bold text-slate-200">Katalog Layanan</h4>
+                    <button onclick="openAddServiceModal()" class="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-neon-cyan flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i> Tambah Layanan
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-800">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-900 text-slate-400 font-semibold uppercase text-[10px] tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="p-3">Kategori</th>
+                                <th class="p-3">Nama Layanan</th>
+                                <th class="p-3">Harga</th>
+                                <th class="p-3">Deskripsi</th>
+                                <th class="p-3 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-services-table-body" class="divide-y divide-slate-800/60 bg-slate-950/50">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Admin Tab Content: Settings -->
+            <div id="admin-content-settings" class="pt-6 hidden">
+                <form onsubmit="handleSaveSettings(event)" class="space-y-6 max-w-2xl">
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-4">
+                        <h5 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Branding & Logo Website</h5>
+                        
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1">Nama Brand Website</label>
+                            <input type="text" id="setting-site-name" class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1">Logo Website (Base64 / URL Gambar)</label>
+                            <input type="text" id="setting-logo-url" placeholder="https://... atau upload file" class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs mb-2">
+                            <input type="file" id="setting-logo-file" accept="image/*" onchange="handleLogoFileUpload(event)" class="text-xs text-slate-400 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-slate-800 file:text-cyan-400">
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-4">
+                        <h5 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Kontak Admin & Customer Service</h5>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Nomor WhatsApp Admin (Format: 628...)</label>
+                                <input type="text" id="setting-admin-phone" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Nomor WhatsApp CS (Format: 628...)</label>
+                                <input type="text" id="setting-cs-phone" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-4">
+                        <h5 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Pengaturan Pembayaran & QRIS</h5>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Nomor DANA</label>
+                                <input type="text" id="setting-dana-number" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Nomor GoPay</label>
+                                <input type="text" id="setting-gopay-number" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1">QR Code Payment / QRIS (Base64 / URL)</label>
+                            <input type="text" id="setting-qris-url" class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs mb-2">
+                            <input type="file" id="setting-qris-file" accept="image/*" onchange="handleQrisFileUpload(event)" class="text-xs text-slate-400 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-slate-800 file:text-cyan-400">
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-4">
+                        <h5 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Keamanan Akses</h5>
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1">Ubah PIN Admin</label>
+                            <input type="password" id="setting-admin-pin" required class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs font-mono">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-neon-cyan flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Semua Perubahan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Add/Edit Modal -->
+    <div id="service-form-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-modal w-full max-w-md rounded-2xl border border-slate-800 p-6 shadow-2xl relative">
+            <button onclick="closeServiceFormModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-white mb-4" id="service-modal-title">Tambah Layanan Baru</h3>
+
+            <form onsubmit="handleSaveService(event)" class="space-y-4">
+                <input type="hidden" id="edit-service-id">
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Kategori Layanan</label>
+                    <input type="text" id="edit-service-category" placeholder="Contoh: Joki Kontak, JasaPost, Desain" required class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-2.5 text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Layanan</label>
+                    <input type="text" id="edit-service-name" placeholder="Contoh: 1-Day, Profile Logo" required class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-2.5 text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Harga (Rp)</label>
+                    <input type="number" id="edit-service-price" placeholder="1000" required class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-2.5 text-xs">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Deskripsi Layanan</label>
+                    <textarea id="edit-service-desc" rows="3" placeholder="Penjelasan singkat mengenai paket..." class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-2.5 text-xs"></textarea>
+                </div>
+
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="closeServiceFormModal()" class="w-1/3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs">Batal</button>
+                    <button type="submit" class="w-2/3 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-neon-cyan">Simpan Layanan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Floating CS Admin WhatsApp Button -->
+    <a id="floating-cs-btn" href="#" target="_blank" title="Hubungi CS Admin" class="fixed bottom-5 left-5 z-40 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-4 py-3 rounded-full shadow-2xl flex items-center gap-2.5 border-2 border-emerald-300 transition-all transform hover:scale-105 group">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        <span class="text-xs font-black uppercase tracking-wider hidden sm:inline">CS Admin WA</span>
+    </a>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+
+        // Default Initial Data Schema
+        const DEFAULT_SERVICES = [
+            { id: 'srv_1', category: 'Joki Kontak', name: 'Joki Kontak 1-Day', price: 1000, desc: 'Proses joki kontak durasi 1 hari penuh.' },
+            { id: 'srv_2', category: 'Joki Kontak', name: 'Joki Kontak 2-Day', price: 2000, desc: 'Proses joki kontak durasi 2 hari berturut-turut.' },
+            { id: 'srv_3', category: 'Joki Kontak', name: 'Joki Kontak 3-Day', price: 3000, desc: 'Proses joki kontak durasi 3 hari maksimal.' },
+            { id: 'srv_4', category: 'JasaPost', name: 'Account & General Posting', price: 1000, desc: 'Jasa posting akun & materi umum ke grup/channel target.' },
+            { id: 'srv_5', category: 'Jasa Desain PP JB', name: 'Profile Logo', price: 2000, desc: 'Desain logo profil JB bersih & menarik.' },
+            { id: 'srv_6', category: 'Jasa Desain PP JB', name: 'Sticker Logo', price: 3000, desc: 'Desain sticker logo custom format HD.' },
+            { id: 'srv_7', category: 'Jasa Desain PP JB', name: 'Chibi Version', price: 5000, desc: 'Desain karakter avatar versi Chibi eksklusif.' }
+        ];
+
+        // Default SVG QR Code placeholder
+        const DEFAULT_QRIS_SVG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><rect width='200' height='200' fill='%23ffffff'/><rect x='20' y='20' width='50' height='50' fill='%23000000'/><rect x='30' y='30' width='30' height='30' fill='%23ffffff'/><rect x='35' y='35' width='20' height='20' fill='%23000000'/><rect x='130' y='20' width='50' height='50' fill='%23000000'/><rect x='140' y='30' width='30' height='30' fill='%23ffffff'/><rect x='145' y='35' width='20' height='20' fill='%23000000'/><rect x='20' y='130' width='50' height='50' fill='%23000000'/><rect x='30' y='140' width='30' height='30' fill='%23ffffff'/><rect x='35' y='145' width='20' height='20' fill='%23000000'/><path d='M80 20h30v10H80zM80 40h20v20H80zM110 50h10v30h-10zM80 80h40v10H80zM20 80h40v20H20zM80 100h20v40H80zM120 100h50v20h-50zM140 130h30v50h-30zM80 150h40v30H80z' fill='%23000000'/><text x='100' y='195' font-size='10' text-anchor='middle' font-family='sans-serif' fill='%23666666'>HARLAN QRIS</text></svg>";
+
+        const DEFAULT_SETTINGS = {
+            siteName: "HARLAN STORE",
+            logoUrl: "",
+            adminPhone: "6281234567890",
+            csPhone: "6281234567890",
+            danaNumber: "081234567890",
+            gopayNumber: "081234567890",
+            qrisUrl: DEFAULT_QRIS_SVG,
+            pin: "030313"
+        };
+
+        // Application State
+        let appServices = [];
+        let appOrders = [];
+        let appSettings = {};
+        let activeCategoryFilter = 'ALL';
+        let currentUploadedProof = '';
+        let isAdminLoggedIn = false;
+
+
+        // Local Storage Helpers
+        function initStorage() {
+            const savedServices = localStorage.getItem('harlan_services');
+            const savedOrders = localStorage.getItem('harlan_orders');
+            const savedSettings = localStorage.getItem('harlan_settings');
+
+            appServices = savedServices ? JSON.parse(savedServices) : DEFAULT_SERVICES;
+            appOrders = savedOrders ? JSON.parse(savedOrders) : [];
+            appSettings = savedSettings ? JSON.parse(savedSettings) : DEFAULT_SETTINGS;
+
+            saveState();
+        }
+
+        function saveState() {
+            localStorage.setItem('harlan_services', JSON.stringify(appServices));
+            localStorage.setItem('harlan_orders', JSON.stringify(appOrders));
+            localStorage.setItem('harlan_settings', JSON.stringify(appSettings));
+        }
+
+        function formatRupiah(amount) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(amount);
+        }
+
+        function generateQueueCode() {
+            const rand = Math.floor(100000 + Math.random() * 900000).toString(36).toUpperCase();
+            const num = Math.floor(1000 + Math.random() * 9000);
+            return `HRLN-${num}${rand.substring(0, 2)}`;
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-slate-900 border-cyan-500 text-cyan-400';
+            if (type === 'success') bgClass = 'bg-slate-900 border-emerald-500 text-emerald-400';
+            if (type === 'error') bgClass = 'bg-slate-900 border-red-500 text-red-400';
+
+            toast.className = `px-4 py-3 rounded-xl border ${bgClass} text-xs font-bold shadow-xl flex items-center gap-2 transition-all transform translate-y-2 pointer-events-auto`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-info'}"></i><span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        // Render Branding
+        function renderBranding() {
+            document.getElementById('nav-brand-name').innerText = appSettings.siteName || 'HARLAN STORE';
+            document.getElementById('footer-brand-name').innerText = appSettings.siteName || 'HARLAN STORE';
+            
+            const logoImg = document.getElementById('nav-logo-img');
+            const logoIcon = document.getElementById('nav-logo-icon');
+
+            if (appSettings.logoUrl) {
+                logoImg.src = appSettings.logoUrl;
+                logoImg.classList.remove('hidden');
+                logoIcon.classList.add('hidden');
+            } else {
+                logoImg.classList.add('hidden');
+                logoIcon.classList.remove('hidden');
+            }
+
+            document.getElementById('current-year').innerText = new Date().getFullYear();
+
+            const csPhone = appSettings.csPhone || appSettings.adminPhone || "6281234567890";
+            const csMsg = encodeURIComponent(`Halo CS Admin ${appSettings.siteName}, saya butuh bantuan mengenai layanan.`);
+            const csWaLink = `https://wa.me/${csPhone}?text=${csMsg}`;
+
+            const navCsBtn = document.getElementById('nav-cs-btn');
+            if (navCsBtn) navCsBtn.href = csWaLink;
+
+            const mobileCsBtn = document.getElementById('mobile-cs-btn');
+            if (mobileCsBtn) mobileCsBtn.href = csWaLink;
+
+            const floatingCsBtn = document.getElementById('floating-cs-btn');
+            if (floatingCsBtn) floatingCsBtn.href = csWaLink;
+            
+            // Metrics
+            document.getElementById('stat-services-count').innerText = appServices.length;
+            document.getElementById('stat-orders-count').innerText = appOrders.length;
+        }
+
+        // Render Services Catalog
+        function renderServices() {
+            const categoryContainer = document.getElementById('category-tabs');
+            const gridContainer = document.getElementById('services-grid');
+
+            // Unique categories
+            const categories = ['ALL', ...new Set(appServices.map(s => s.category))];
+
+            // Render Tabs
+            categoryContainer.innerHTML = categories.map(cat => {
+                const isActive = activeCategoryFilter === cat;
+                const label = cat === 'ALL' ? 'Semua Layanan' : cat;
+                return `
+                    <button onclick="setCategoryFilter('${cat}')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all ${isActive ? 'bg-cyan-500 text-slate-950 shadow-neon-cyan' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'}">
+                        ${label}
+                    </button>
+                `;
+            }).join('');
+
+            // Filter Services
+            const filtered = activeCategoryFilter === 'ALL' 
+                ? appServices 
+                : appServices.filter(s => s.category === activeCategoryFilter);
+
+            if (filtered.length === 0) {
+                gridContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12 glass-panel rounded-2xl">
+                        <i class="fa-solid fa-box-open text-3xl text-slate-600 mb-2"></i>
+                        <p class="text-slate-400 text-sm">Tidak ada layanan dalam kategori ini.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            gridContainer.innerHTML = filtered.map(service => `
+                <div class="glass-panel rounded-2xl p-6 border border-slate-800 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-400 text-[10px] font-extrabold uppercase tracking-wider border border-cyan-500/20">
+                                ${service.category}
+                            </span>
+                            <span class="text-lg font-black text-emerald-400 font-mono">
+                                ${formatRupiah(service.price)}
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">${service.name}</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">${service.desc || 'Layanan instant cepat dan berkualitas tinggi.'}</p>
+                    </div>
+
+                    <button onclick="openOrderModal('${service.id}')" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-slate-200 font-bold text-xs transition-all border border-slate-700 hover:border-cyan-400 flex items-center justify-center gap-2 group-hover:shadow-neon-cyan">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span>Pesan Layanan</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function setCategoryFilter(category) {
+            activeCategoryFilter = category;
+            renderServices();
+        }
+
+
+        // Order Modal & Dynamic Payment Handling
+        function openOrderModal(serviceId) {
+            const service = appServices.find(s => s.id === serviceId);
+            if (!service) return;
+
+            document.getElementById('form-service-id').value = service.id;
+            document.getElementById('modal-service-title').innerText = service.name;
+            document.getElementById('modal-service-price').innerText = formatRupiah(service.price);
+            
+            // Populate payment numbers
+            document.getElementById('display-dana-number').innerText = appSettings.danaNumber;
+            document.getElementById('display-gopay-number').innerText = appSettings.gopayNumber;
+            
+            const qrisImg = document.getElementById('display-qris-image');
+            qrisImg.src = appSettings.qrisUrl || DEFAULT_QRIS_SVG;
+
+            currentUploadedProof = '';
+            document.getElementById('form-payment-proof').value = '';
+            document.getElementById('proof-preview-container').classList.add('hidden');
+
+            togglePaymentDisplay();
+
+            document.getElementById('order-modal').classList.remove('hidden');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('order-modal').classList.add('hidden');
+        }
+
+        function togglePaymentDisplay() {
+            const method = document.querySelector('input[name="payment_method"]:checked')?.value || 'DANA';
+            const numBox = document.getElementById('active-payment-number');
+
+            if (method === 'DANA') {
+                numBox.innerText = appSettings.danaNumber;
+            } else {
+                numBox.innerText = appSettings.gopayNumber;
+            }
+        }
+
+        function copyPaymentNumber() {
+            const num = document.getElementById('active-payment-number').innerText;
+            navigator.clipboard.writeText(num);
+            showToast('Nomor pembayaran berhasil disalin!', 'success');
+        }
+
+        function handleImageProofChange(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentUploadedProof = e.target.result;
+                const img = document.getElementById('proof-preview-img');
+                img.src = currentUploadedProof;
+                document.getElementById('proof-preview-container').classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Handle Order Submission
+        function handleOrderSubmit(event) {
+            event.preventDefault();
+
+            const serviceId = document.getElementById('form-service-id').value;
+            const service = appServices.find(s => s.id === serviceId);
+            const customerName = document.getElementById('form-customer-name').value.trim();
+            const customerPhone = document.getElementById('form-customer-phone').value.trim();
+            const orderNotes = document.getElementById('form-order-notes').value.trim();
+            const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+            if (!currentUploadedProof) {
+                showToast('Harap unggah bukti transfer pembayaran!', 'error');
+                return;
+            }
+
+            const queueCode = generateQueueCode();
+            const newOrder = {
+                id: 'ord_' + Date.now(),
+                queueCode: queueCode,
+                serviceId: service.id,
+                serviceName: service.name,
+                category: service.category,
+                price: service.price,
+                customerName: customerName,
+                customerPhone: customerPhone,
+                orderNotes: orderNotes,
+                paymentMethod: paymentMethod,
+                paymentProof: currentUploadedProof,
+                status: 'PENDING', // PENDING, PROCESSING, COMPLETED, CANCELLED
+                createdAt: new Date().toISOString()
+            };
+
+            appOrders.unshift(newOrder);
+            saveState();
+            renderBranding();
+
+            closeOrderModal();
+
+            // Prepare WhatsApp Dispatch Link
+            const waText = `Halo Admin ${appSettings.siteName}, saya telah melakukan pemesanan:%0A%0A` +
+                `*KODE ANTREAN:* ${newOrder.queueCode}%0A` +
+                `*Layanan:* ${newOrder.serviceName}%0A` +
+                `*Harga:* ${formatRupiah(newOrder.price)}%0A` +
+                `*Nama Pemesan:* ${newOrder.customerName}%0A` +
+                `*No. WhatsApp:* ${newOrder.customerPhone}%0A` +
+                `*Metode Bayar:* ${newOrder.paymentMethod}%0A` +
+                (newOrder.orderNotes ? `*Catatan:* ${newOrder.orderNotes}%0A` : '') +
+                `%0A*Status:* Menunggu Verifikasi%0A%0A` +
+                `Saya sudah mengunggah bukti pembayaran di website. Mohon segera diproses. Terima kasih!`;
+
+            const waLink = `https://wa.me/${appSettings.adminPhone}?text=${waText}`;
+
+            document.getElementById('created-queue-code').innerText = queueCode;
+            document.getElementById('btn-whatsapp-dispatch').href = waLink;
+            document.getElementById('order-success-modal').classList.remove('hidden');
+
+            showToast('Pesanan & Kode Antrean berhasil dibuat!', 'success');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('order-success-modal').classList.add('hidden');
+        }
+
+        function copyCreatedQueueCode() {
+            const code = document.getElementById('created-queue-code').innerText;
+            navigator.clipboard.writeText(code);
+            showToast('Kode Antrean disalin ke clipboard!', 'success');
+        }
+
+        // Handle Queue Status Tracking
+        function handleSearchQueue(event) {
+            event.preventDefault();
+            const searchCode = document.getElementById('queue-search-input').value.trim().toUpperCase();
+            const container = document.getElementById('queue-result-container');
+
+            const order = appOrders.find(o => o.queueCode === searchCode);
+
+            if (!order) {
+                container.innerHTML = `
+                    <div class="p-4 rounded-xl bg-red-950/40 border border-red-800 text-center text-red-300 text-xs">
+                        <i class="fa-solid fa-circle-xmark text-xl mb-1 block text-red-400"></i>
+                        Kode Antrean <strong>${searchCode}</strong> tidak ditemukan. Periksa kembali penulisan kode Anda.
+                    </div>
+                `;
+                container.classList.remove('hidden');
+                return;
+            }
+
+            let statusBadge = '<span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold border border-amber-500/30">PENDING / MENUNGGU</span>';
+            if (order.status === 'PROCESSING') statusBadge = '<span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold border border-cyan-500/30 animate-pulse">SEDANG DIPROSES</span>';
+            if (order.status === 'COMPLETED') statusBadge = '<span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/30">SELESAI</span>';
+            if (order.status === 'CANCELLED') statusBadge = '<span class="px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-bold border border-red-500/30">DIBATALKAN</span>';
+
+            const dateStr = new Date(order.createdAt).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+
+            const csWaText = encodeURIComponent(`Halo CS ${appSettings.siteName}, saya ingin menanyakan status antrean saya:\nKode Antrean: ${order.queueCode}\nNama: ${order.customerName}`);
+
+            container.innerHTML = `
+                <div class="p-5 rounded-xl bg-slate-900 border border-slate-700 space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-800 pb-3">
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-slate-400">Hasil Pencarian Antrean</span>
+                            <h4 class="text-lg font-black text-cyan-400 font-mono">${order.queueCode}</h4>
+                        </div>
+                        <div>${statusBadge}</div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div>
+                            <span class="text-slate-400 block">Layanan:</span>
+                            <span class="font-semibold text-white">${order.serviceName}</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block">Harga:</span>
+                            <span class="font-semibold text-emerald-400 font-mono">${formatRupiah(order.price)}</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block">Pemesan:</span>
+                            <span class="font-semibold text-white">${order.customerName}</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block">Waktu Pesan:</span>
+                            <span class="font-semibold text-slate-300">${dateStr}</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex justify-end">
+                        <a href="https://wa.me/${appSettings.csPhone}?text=${csWaText}" target="_blank" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 text-xs font-bold border border-slate-700 flex items-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-emerald-400"></i> Hubungi CS
+                        </a>
+                    </div>
+                </div>
+            `;
+            container.classList.remove('hidden');
+        }
+
+
+        // Admin Modal & PIN Login
+        function openAdminModal() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+            if (isAdminLoggedIn) {
+                showAdminDashboard();
+            } else {
+                document.getElementById('admin-login-card').classList.remove('hidden');
+                document.getElementById('admin-dashboard-card').classList.add('hidden');
+            }
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const pinInput = document.getElementById('admin-pin-input').value;
+
+            if (pinInput === appSettings.pin) {
+                isAdminLoggedIn = true;
+                document.getElementById('admin-pin-input').value = '';
+                showToast('Login Admin Berhasil!', 'success');
+                showAdminDashboard();
+            } else {
+                showToast('PIN Admin salah!', 'error');
+            }
+        }
+
+        function handleAdminLogout() {
+            isAdminLoggedIn = false;
+            document.getElementById('admin-login-card').classList.remove('hidden');
+            document.getElementById('admin-dashboard-card').classList.add('hidden');
+            document.getElementById('admin-pin-input').value = '';
+            showToast('Anda telah berhasil keluar (logout) dari Admin Panel.', 'info');
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('admin-login-card').classList.add('hidden');
+            document.getElementById('admin-dashboard-card').classList.remove('hidden');
+            renderAdminOrders();
+            renderAdminServices();
+            loadAdminSettingsForm();
+        }
+
+        // Admin Tab Switcher
+        function switchAdminTab(tabName) {
+            const tabs = ['orders', 'services', 'settings'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`admin-tab-${t}`);
+                const content = document.getElementById(`admin-content-${t}`);
+                if (t === tabName) {
+                    btn.className = "px-4 py-2.5 text-xs font-bold rounded-t-lg text-cyan-400 border-b-2 border-cyan-400 flex items-center gap-2";
+                    content.classList.remove('hidden');
+                } else {
+                    btn.className = "px-4 py-2.5 text-xs font-bold rounded-t-lg text-slate-400 hover:text-slate-200 flex items-center gap-2";
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        // Render Orders Table in Admin
+        function renderAdminOrders() {
+            const filter = document.getElementById('admin-order-filter').value;
+            const tbody = document.getElementById('admin-orders-table-body');
+
+            const filteredOrders = filter === 'ALL' ? appOrders : appOrders.filter(o => o.status === filter);
+
+            if (filteredOrders.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-8 text-slate-500">
+                            Tidak ada data antrean / pesanan.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredOrders.map(order => `
+                <tr class="hover:bg-slate-900/60 transition-colors">
+                    <td class="p-3 font-mono font-bold text-cyan-400">${order.queueCode}</td>
+                    <td class="p-3">
+                        <div class="font-bold text-white">${order.customerName}</div>
+                        <div class="text-[10px] text-slate-400">${order.customerPhone}</div>
+                    </td>
+                    <td class="p-3">
+                        <div class="font-semibold text-slate-200">${order.serviceName}</div>
+                        <div class="text-[10px] text-slate-500">${order.category}</div>
+                    </td>
+                    <td class="p-3 font-mono font-semibold text-emerald-400">${formatRupiah(order.price)}</td>
+                    <td class="p-3">
+                        <div class="font-semibold text-slate-300 mb-1">${order.paymentMethod}</div>
+                        <button onclick="viewFullImage('${order.paymentProof}')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-bold text-cyan-400 border border-slate-700">
+                            <i class="fa-solid fa-image mr-1"></i> Lihat Bukti
+                        </button>
+                    </td>
+                    <td class="p-3">
+                        <select onchange="updateOrderStatus('${order.id}', this.value)" class="bg-slate-900 border border-slate-700 text-xs rounded-lg px-2 py-1 font-semibold text-white focus:outline-none">
+                            <option value="PENDING" ${order.status === 'PENDING' ? 'selected' : ''}>Pending</option>
+                            <option value="PROCESSING" ${order.status === 'PROCESSING' ? 'selected' : ''}>Diproses</option>
+                            <option value="COMPLETED" ${order.status === 'COMPLETED' ? 'selected' : ''}>Selesai</option>
+                            <option value="CANCELLED" ${order.status === 'CANCELLED' ? 'selected' : ''}>Dibatalkan</option>
+                        </select>
+                    </td>
+                    <td class="p-3 text-right">
+                        <button onclick="deleteOrder('${order.id}')" class="p-1.5 rounded bg-red-950/60 hover:bg-red-900 text-red-400 text-xs">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const order = appOrders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                saveState();
+                showToast(`Status antrean ${order.queueCode} diperbarui menjadi ${newStatus}!`, 'success');
+            }
+        }
+
+        function deleteOrder(orderId) {
+            appOrders = appOrders.filter(o => o.id !== orderId);
+            saveState();
+            renderAdminOrders();
+            renderBranding();
+            showToast('Pesanan berhasil dihapus.', 'info');
+        }
+
+        function clearAllOrders() {
+            if (appOrders.length === 0) return;
+            appOrders = [];
+            saveState();
+            renderAdminOrders();
+            renderBranding();
+            showToast('Semua pesanan telah dibersihkan.', 'info');
+        }
+
+        function viewFullImage(src) {
+            document.getElementById('preview-full-image').src = src;
+            document.getElementById('image-modal').classList.remove('hidden');
+        }
+
+        function closeImageModal() {
+            document.getElementById('image-modal').classList.add('hidden');
+        }
+
+        // Service Management in Admin
+        function renderAdminServices() {
+            const tbody = document.getElementById('admin-services-table-body');
+            tbody.innerHTML = appServices.map(s => `
+                <tr class="hover:bg-slate-900/60">
+                    <td class="p-3 font-semibold text-cyan-400">${s.category}</td>
+                    <td class="p-3 font-bold text-white">${s.name}</td>
+                    <td class="p-3 font-mono font-semibold text-emerald-400">${formatRupiah(s.price)}</td>
+                    <td class="p-3 text-slate-400 max-w-xs truncate">${s.desc || '-'}</td>
+                    <td class="p-3 text-right space-x-1">
+                        <button onclick="openEditServiceModal('${s.id}')" class="p-1.5 rounded bg-slate-800 hover:bg-slate-700 text-cyan-400">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button onclick="deleteService('${s.id}')" class="p-1.5 rounded bg-red-950/60 hover:bg-red-900 text-red-400">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openAddServiceModal() {
+            document.getElementById('service-modal-title').innerText = 'Tambah Layanan Baru';
+            document.getElementById('edit-service-id').value = '';
+            document.getElementById('edit-service-category').value = '';
+            document.getElementById('edit-service-name').value = '';
+            document.getElementById('edit-service-price').value = '';
+            document.getElementById('edit-service-desc').value = '';
+            document.getElementById('service-form-modal').classList.remove('hidden');
+        }
+
+        function openEditServiceModal(serviceId) {
+            const service = appServices.find(s => s.id === serviceId);
+            if (!service) return;
+
+            document.getElementById('service-modal-title').innerText = 'Edit Layanan';
+            document.getElementById('edit-service-id').value = service.id;
+            document.getElementById('edit-service-category').value = service.category;
+            document.getElementById('edit-service-name').value = service.name;
+            document.getElementById('edit-service-price').value = service.price;
+            document.getElementById('edit-service-desc').value = service.desc || '';
+            document.getElementById('service-form-modal').classList.remove('hidden');
+        }
+
+        function closeServiceFormModal() {
+            document.getElementById('service-form-modal').classList.add('hidden');
+        }
+
+        function handleSaveService(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('edit-service-id').value;
+            const category = document.getElementById('edit-service-category').value.trim();
+            const name = document.getElementById('edit-service-name').value.trim();
+            const price = parseInt(document.getElementById('edit-service-price').value, 10);
+            const desc = document.getElementById('edit-service-desc').value.trim();
+
+            if (id) {
+                // Edit existing
+                const index = appServices.findIndex(s => s.id === id);
+                if (index !== -1) {
+                    appServices[index] = { id, category, name, price, desc };
+                }
+            } else {
+                // Create new
+                const newService = {
+                    id: 'srv_' + Date.now(),
+                    category,
+                    name,
+                    price,
+                    desc
+                };
+                appServices.push(newService);
+            }
+
+            saveState();
+            renderServices();
+            renderAdminServices();
+            renderBranding();
+            closeServiceFormModal();
+            showToast('Layanan berhasil disimpan!', 'success');
+        }
+
+        function deleteService(serviceId) {
+            appServices = appServices.filter(s => s.id !== serviceId);
+            saveState();
+            renderServices();
+            renderAdminServices();
+            renderBranding();
+            showToast('Layanan berhasil dihapus.', 'info');
+        }
+
+        // Admin Settings Logic
+        function loadAdminSettingsForm() {
+            document.getElementById('setting-site-name').value = appSettings.siteName || '';
+            document.getElementById('setting-logo-url').value = appSettings.logoUrl || '';
+            document.getElementById('setting-admin-phone').value = appSettings.adminPhone || '';
+            document.getElementById('setting-cs-phone').value = appSettings.csPhone || '';
+            document.getElementById('setting-dana-number').value = appSettings.danaNumber || '';
+            document.getElementById('setting-gopay-number').value = appSettings.gopayNumber || '';
+            document.getElementById('setting-qris-url').value = appSettings.qrisUrl || '';
+            document.getElementById('setting-admin-pin').value = appSettings.pin || '030313';
+        }
+
+        function handleLogoFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                document.getElementById('setting-logo-url').value = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleQrisFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                document.getElementById('setting-qris-url').value = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleSaveSettings(event) {
+            event.preventDefault();
+
+            appSettings.siteName = document.getElementById('setting-site-name').value.trim();
+            appSettings.logoUrl = document.getElementById('setting-logo-url').value.trim();
+            appSettings.adminPhone = document.getElementById('setting-admin-phone').value.trim();
+            appSettings.csPhone = document.getElementById('setting-cs-phone').value.trim();
+            appSettings.danaNumber = document.getElementById('setting-dana-number').value.trim();
+            appSettings.gopayNumber = document.getElementById('setting-gopay-number').value.trim();
+            appSettings.qrisUrl = document.getElementById('setting-qris-url').value.trim() || DEFAULT_QRIS_SVG;
+            appSettings.pin = document.getElementById('setting-admin-pin').value.trim();
+
+            saveState();
+            renderBranding();
+            showToast('Pengaturan & Branding berhasil disimpan!', 'success');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+
+        // Initialize Application
+        window.addEventListener('DOMContentLoaded', () => {
+            initStorage();
+            renderBranding();
+            renderServices();
+        });
+    </script>
+</body>
+</html>
